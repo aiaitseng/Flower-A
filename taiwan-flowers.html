@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>台灣花卉圖鑑與栽培指南 | Taiwan Flowers Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --surface: #ffffff;
+      --primary: #2d5a42;
+      --primary-light: #e7f0ea;
+      --accent: #c86d51;
+      --text: #262a27;
+      --muted: #666e68;
+      --border: #e3dfd7;
+      --shadow: 0 8px 24px rgba(34, 48, 38, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Header / Hero */
+    header {
+      background: linear-gradient(135deg, #214432 0%, #3a6b50 60%, #527962 100%);
+      color: #fff;
+      padding: 3.5rem 1.5rem 2.75rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 45%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 224, 178, 0.12), transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(6px);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    header h1 {
+      font-family: "Noto Serif TC", serif;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.03em;
+    }
+
+    header p {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1rem;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* Controls */
+    .controls-wrapper {
+      max-width: 1240px;
+      margin: -1.5rem auto 2rem;
+      padding: 0 1.25rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .controls-bar {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.15rem 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--border);
+    }
+
+    .search-box {
+      flex: 1 1 260px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.65rem 1rem 0.65rem 2.4rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fbfaf7;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(45, 90, 66, 0.12);
+      background: #fff;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--border);
+      background: #fbfaf7;
+      color: var(--text);
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .stats-bar {
+      max-width: 1240px;
+      margin: 0 auto 1.25rem;
+      padding: 0 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Grid */
+    main {
+      max-width: 1240px;
+      margin: 0 auto 4rem;
+      padding: 0 1.25rem;
+    }
+
+    .flower-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #eceae4;
+      overflow: hidden;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .card:hover .card-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .img-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-align: center;
+      background: linear-gradient(145deg, #e9eee9, #f4f1ea);
+      color: var(--muted);
+      font-size: 0.85rem;
+      gap: 0.45rem;
+    }
+
+    .img-fallback.visible {
+      display: flex;
+    }
+
+    .upload-photo-btn {
+      position: absolute;
+      bottom: 0.65rem;
+      right: 0.65rem;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--text);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 999px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s, background 0.2s;
+      z-index: 2;
+      font-family: inherit;
+    }
+
+    .card-img-wrap:hover .upload-photo-btn,
+    .img-fallback.visible ~ .upload-photo-btn {
+      opacity: 1;
+    }
+
+    .upload-photo-btn:hover {
+      background: #fff;
+      color: var(--primary);
+    }
+
+    .card-tag {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: rgba(33, 68, 50, 0.85);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title-row {
+      margin-bottom: 0.85rem;
+    }
+
+    .card-zh {
+      font-family: "Noto Serif TC", serif;
+      font-size: 1.32rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.3;
+    }
+
+    .card-en {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .card-sci {
+      font-style: italic;
+      font-size: 0.8rem;
+      color: #8b938d;
+    }
+
+    .specs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .spec-item {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 0.5rem;
+      font-size: 0.87rem;
+      align-items: start;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px dashed #eeebe4;
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .spec-label {
+      font-weight: 600;
+      color: #49524b;
+      white-space: nowrap;
+    }
+
+    .spec-value {
+      color: var(--text);
+    }
+
+    .detail-btn {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .detail-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(19, 28, 22, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 100;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border-radius: 20px;
+      max-width: 780px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
+      position: relative;
+      animation: modalIn 0.22s ease-out;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--text);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      display: block;
+      background: #eceae4;
+    }
+
+    .modal-body {
+      padding: 1.75rem;
+    }
+
+    .modal-title {
+      font-family: "Noto Serif TC", serif;
+      font-size: 1.75rem;
+      color: var(--primary);
+    }
+
+    .modal-subtitle {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-box {
+      background: #f8f7f3;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+    }
+
+    .modal-box h4 {
+      font-size: 0.85rem;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-box p {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .modal-notes {
+      background: var(--primary-light);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-size: 0.92rem;
+      color: #214432;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3.5rem 1rem;
+      color: var(--muted);
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      background: #f2efe9;
+    }
+
+    @media (max-width: 600px) {
+      .spec-item {
+        grid-template-columns: 76px 1fr;
+      }
+      .modal-body {
+        padding: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="hero-inner">
+      <div class="hero-badge">TAIWAN BOTANICAL GUIDE</div>
+      <h1>台灣常見與特色花卉圖鑑</h1>
+      <p>收錄 20 種台灣山林、庭園與花市常見花卉，完整整理適合溫度、土壤介質、日照需求與澆水頻率等栽培指南。</p>
+    </div>
+  </header>
+
+  <div class="controls-wrapper">
+    <div class="controls-bar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="搜尋花名、英文名稱、學名或土壤關鍵字..." />
+      </div>
+      <div class="filter-group" id="filterGroup">
+        <button class="filter-btn active" data-filter="all">全部花卉 (20)</button>
+        <button class="filter-btn" data-filter="full-sun">☀️ 喜全日照</button>
+        <button class="filter-btn" data-filter="partial-shade">🌤️ 半日照 / 散射光</button>
+        <button class="filter-btn" data-filter="native">🇹🇼 台灣原生 / 特有種</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <span id="resultCount">顯示全部 20 種花卉</span>
+    <span>💡 提示：請將照片存放於 <code>images/01.jpg</code> ～ <code>images/20.jpg</code>，或直接點擊圖片右下角「更換照片」載入本地圖檔。</span>
+  </div>
+
+  <main>
+    <div class="flower-grid" id="flowerGrid"></div>
+  </main>
+
+  <!-- Detail Modal -->
+  <div class="modal-backdrop" id="flowerModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalClose" aria-label="關閉視窗">&times;</button>
+      <img src="" alt="" class="modal-img" id="modalImg" />
+      <div class="modal-body">
+        <h2 class="modal-title" id="modalZh"></h2>
+        <div class="modal-subtitle" id="modalSub"></div>
+        <div class="modal-grid" id="modalGrid"></div>
+        <div class="modal-notes" id="modalNotes"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    台灣花卉介紹與養護指南網頁 ｜ 資料僅供園藝栽培參考，實際養護請依台灣各地區微氣候調整
+  </footer>
+
+  <input type="file" id="hiddenFileInput" accept="image/*" style="display:none" />
+
+  <script>
+    const flowers = [
+      {
+        id: 1,
+        img: "images/01.jpg",
+        zh: "油桐花",
+        en: "Tung Blossom",
+        sci: "Vernicia fordii",
+        category: ["full-sun"],
+        badge: "五月雪",
+        temp: "18°C – 28°C",
+        soil: "排水良好、微酸性至中性之砂質壤土或肥沃壤土",
+        sunlight: "全日照至半日照（喜充足陽光）",
+        watering: "幼苗每週 2–3 次；成樹耐旱，雨季需注意排水防積水",
+        season: "每年 4 月 – 5 月（春末夏初）",
+        spots: "桃園龍潭、新竹內灣、苗栗三義與南庄、彰化八卦山",
+        tips: "台灣低至中海拔山區代表景觀植物，花朵凋謝時隨風飄落如雪，故有「五月雪」美稱。"
+      },
+      {
+        id: 2,
+        img: "images/02.jpg",
+        zh: "大波斯菊",
+        en: "Garden Cosmos",
+        sci: "Cosmos bipinnatus",
+        category: ["full-sun"],
+        badge: "花海主角",
+        temp: "15°C – 25°C",
+        soil: "不拘，以排水良好、疏鬆之砂質壤土為佳（忌過肥以免徒長）",
+        sunlight: "全日照（日照不足易倒伏、開花少）",
+        watering: "耐旱忌濕，土乾再澆即可，約每週 1–2 次",
+        season: "每年 10 月 – 隔年 2 月（台灣秋冬季最盛）",
+        spots: "台中新社花海、台北關渡、苗栗銅鑼、桃園大溪",
+        tips: "台灣休耕農地常種植作為綠肥兼觀光花海，播種容易，花色有粉、白、紫紅等多種變化。"
+      },
+      {
+        id: 3,
+        img: "images/03.jpg",
+        zh: "白色海芋",
+        en: "Calla Lily",
+        sci: "Zantedeschia aethiopica",
+        category: ["partial-shade", "full-sun"],
+        badge: "竹子湖名花",
+        temp: "15°C – 22°C",
+        soil: "富含有機質、保濕性佳之微酸性腐植土或水田泥土",
+        sunlight: "全日照至半日照（夏季高溫時需適度遮陰）",
+        watering: "濕生植物需水量大，應保持土壤潮濕或採淺水栽培（每 1–2 天補水）",
+        season: "每年 3 月 – 5 月",
+        spots: "台北陽明山竹子湖",
+        tips: "白色漏斗狀部位其實是「佛焰苞」，真正的花是中間黃色的肉穗花序，非常適合台灣冷涼山區栽培。"
+      },
+      {
+        id: 4,
+        img: "images/04.jpg",
+        zh: "阿勃勒",
+        en: "Golden Shower Tree",
+        sci: "Cassia fistula",
+        category: ["full-sun"],
+        badge: "夏季黃金雨",
+        temp: "22°C – 32°C",
+        soil: "適應力強，以深厚肥沃、排水良好之壤土或砂質壤土最佳",
+        sunlight: "全日照（日照越充足開花越繁盛）",
+        watering: "成樹極耐旱，幼株土乾再澆（每週 1–2 次），梅雨季注意排水",
+        season: "每年 5 月 – 6 月（初夏）",
+        spots: "台南白河蓮鄉周邊、台南虎頭埤、台中興大園道、屏東榮總",
+        tips: "夏季盛開時成串金黃花序垂掛樹梢，微風吹拂花瓣如黃金雨般落下，是中南部經典行道樹。"
+      },
+      {
+        id: 5,
+        img: "images/05.jpg",
+        zh: "紫藤花",
+        en: "Wisteria",
+        sci: "Wisteria sinensis",
+        category: ["full-sun"],
+        badge: "紫色花瀑",
+        temp: "15°C – 25°C",
+        soil: "深厚肥沃、排水良好之微酸性至中性壤土",
+        sunlight: "全日照（光照不足難以促進花芽分化）",
+        watering: "生長期與花期需水量較多，約每 2–3 天澆透一次，忌積水",
+        season: "每年 3 月 – 4 月",
+        spots: "新北淡水紫藤咖啡園、嘉義瑞里、台中武陵農場",
+        tips: "大型木質藤本植物，需搭設堅固棚架供攀爬；冬季落葉後進行適度修剪可讓春季花串更茂密。"
+      },
+      {
+        id: 6,
+        img: "images/06.jpg",
+        zh: "山茶花",
+        en: "Camellia",
+        sci: "Camellia japonica",
+        category: ["partial-shade"],
+        badge: "冬春名花",
+        temp: "15°C – 25°C",
+        soil: "疏鬆透氣、排水良好之酸性腐植土（pH 5.0–6.0）",
+        sunlight: "半日照或明亮散射光（忌夏季西曬強光直射）",
+        watering: "保持盆土微濕而不積水，春夏季每 2–3 天一次，冬季約每週 1 次",
+        season: "每年 11 月 – 隔年 3 月",
+        spots: "台北陽明山花卉試驗中心、新竹香山茶花產銷班",
+        tips: "葉片濃綠油亮，花型從單瓣到完全重瓣皆有，台灣育種實力雄厚，品種極為豐富。"
+      },
+      {
+        id: 7,
+        img: "images/07.jpg",
+        zh: "孔雀草（小萬壽菊）",
+        en: "French Marigold",
+        sci: "Tagetes patula",
+        category: ["full-sun"],
+        badge: "花壇草花",
+        temp: "18°C – 28°C",
+        soil: "排水良好之一般園藝培養土或砂質壤土",
+        sunlight: "全日照（半日照亦可，但全日照花色最飽和）",
+        watering: "表土微乾即澆水，約每 2–3 天一次，避免長期潮濕爛根",
+        season: "台灣秋至春季最盛（幾乎全年可開花）",
+        spots: "全台公園花壇、桃園花彩節、台中中社花市",
+        tips: "植株帶有特殊香氣具一定驅蟲效果，花瓣常呈現黃邊紅褐心的雙色紋路，照顧容易。"
+      },
+      {
+        id: 8,
+        img: "images/08.jpg",
+        zh: "嘉德麗雅蘭",
+        en: "Cattleya Orchid",
+        sci: "Cattleya spp.",
+        category: ["partial-shade"],
+        badge: "洋蘭之王",
+        temp: "18°C – 28°C",
+        soil: "透氣疏水性極佳之介質，如樹皮、蛇木屑、水苔或發泡煉石",
+        sunlight: "明亮散射光（約 50%–60% 遮光率，忌正午烈日直射）",
+        watering: "乾濕分明，待介質微乾後再澆透，夏季約 3–4 天、冬季 7–10 天一次",
+        season: "依品種而異，春秋兩季最常見",
+        spots: "台灣國際蘭展、建國花市、各地蘭園",
+        tips: "花朵碩大華麗、唇瓣呈波浪狀且常具濃郁花香，是台灣蘭花產業中極受歡迎的高貴品種。"
+      },
+      {
+        id: 9,
+        img: "images/09.jpg",
+        zh: "繡球花",
+        en: "Hydrangea",
+        sci: "Hydrangea macrophylla",
+        category: ["partial-shade"],
+        badge: "百變花球",
+        temp: "15°C – 24°C",
+        soil: "富含有機質、排水良好之壤土（酸性土偏藍紫、中性偏鹼呈粉紅）",
+        sunlight: "半日照或早晨溫和日照（午後高溫需遮陰）",
+        watering: "需水量高，生長期與花期幾乎每日需檢查補水，缺水易垂葉",
+        season: "每年 5 月 – 6 月（初夏梅雨季）",
+        spots: "陽明山竹子湖、新北萬里高家、苗栗南庄高山青、桃園復興",
+        tips: "觀賞部位主要為大型「萼片」，在台灣可透過調整介質酸鹼度與施用硫酸鋁來改變花色。"
+      },
+      {
+        id: 10,
+        img: "images/10.jpg",
+        zh: "薰衣草",
+        en: "Lavender",
+        sci: "Lavandula spp.",
+        category: ["full-sun"],
+        badge: "香草之王",
+        temp: "15°C – 25°C",
+        soil: "排水極佳、偏中性至微鹼性之砂質壤土或混合珍珠石介質",
+        sunlight: "全日照（需充足日照且通風良好）",
+        watering: "極耐旱忌潮濕悶熱，務必等土壤徹底乾燥再澆水，約每週 1 次",
+        season: "每年 1 月 – 4 月（台灣冬春季最佳）",
+        spots: "台中新社與新竹尖石薰衣草森林、桃園中壢、苗栗葛瑞絲香草田",
+        tips: "台灣平地夏季高溫多濕不易度夏，建議選擇較耐熱的齒葉薰衣草或甜薰衣草品種。"
+      },
+      {
+        id: 11,
+        img: "images/11.jpg",
+        zh: "雞蛋花（緬梔花）",
+        en: "Frangipani / Plumeria",
+        sci: "Plumeria rubra var. acutifolia",
+        category: ["full-sun"],
+        badge: "熱帶香花",
+        temp: "22°C – 32°C",
+        soil: "疏鬆、排水良好之砂質壤土",
+        sunlight: "全日照（光線越強枝條越健壯、花開越多）",
+        watering: "具耐旱力，生長期土乾再澆透（每週 1–2 次）；冬季休眠大幅減水",
+        season: "每年 5 月 – 10 月",
+        spots: "中南部公園、校園及海濱步道",
+        tips: "花瓣外白內黃宛如雞蛋蛋白與蛋黃而得名，枝條折斷會流出白色乳汁（具微毒性，勿誤食）。"
+      },
+      {
+        id: 12,
+        img: "images/12.jpg",
+        zh: "鬱金香",
+        en: "Tulip",
+        sci: "Tulipa spp.",
+        category: ["full-sun", "partial-shade"],
+        badge: "球根名花",
+        temp: "10°C – 20°C",
+        soil: "疏鬆肥沃、排水良好之中性至微酸性砂質壤土",
+        sunlight: "全日照至半日照（喜冷涼陽光）",
+        watering: "保持土壤微濕但不積水防爛球，約每 3–5 天澆水一次",
+        season: "每年 1 月 – 3 月（台灣冬季）",
+        spots: "台中中社花市、台北士林官邸、桃園桃源仙谷、杉林溪",
+        tips: "溫帶球根花卉，在台灣平地栽種前種球需經 5°C–8°C 低溫冷藏春化處理，方能順利抽梗開花。"
+      },
+      {
+        id: 13,
+        img: "images/13.jpg",
+        zh: "台灣一葉蘭",
+        en: "Taiwan Pleione",
+        sci: "Pleione formosana",
+        category: ["partial-shade", "native"],
+        badge: "台灣特有種",
+        temp: "10°C – 22°C",
+        soil: "透氣保濕介質，如水苔混合細樹皮、泥炭土或蛇木屑",
+        sunlight: "半遮陰散射光（約 50% 遮光，忌強光暴曬）",
+        watering: "春夏生長期保持介質微濕（約 2–4 天一次）；秋冬落葉休眠保持乾燥",
+        season: "每年 3 月 – 4 月",
+        spots: "嘉義阿里山一葉蘭生態故事館、台大梅峰農場、苗栗南庄",
+        tips: "台灣國寶級原生蘭花，一個假球莖通常只長出一片葉與一至兩朵花，為保育植物請勿採摘野生株。"
+      },
+      {
+        id: 14,
+        img: "images/14.jpg",
+        zh: "山櫻花（緋寒櫻）",
+        en: "Taiwan Cherry",
+        sci: "Prunus campanulata",
+        category: ["full-sun", "native"],
+        badge: "台灣原生櫻",
+        temp: "15°C – 25°C",
+        soil: "深厚、排水良好、富含有機質之微酸性壤土",
+        sunlight: "全日照（喜陽光充足且通風之環境）",
+        watering: "定植初期需定期給水；成樹後較耐旱，土乾時澆透即可（約每週 1 次）",
+        season: "每年 1 月 – 2 月（最早開花的櫻花之一）",
+        spots: "陽明山、烏來、九族文化村、阿里山與全台低中海拔山區",
+        tips: "桃紅色花朵呈吊鐘狀垂掛，盛開時常吸引綠繡眼、冠羽畫眉前來吸食花蜜，是最耐台灣暖冬的櫻花。"
+      },
+      {
+        id: 15,
+        img: "images/15.jpg",
+        zh: "台灣百合",
+        en: "Formosa Lily",
+        sci: "Lilium formosanum",
+        category: ["full-sun", "native"],
+        badge: "台灣特有種",
+        temp: "15°C – 26°C",
+        soil: "排水極佳之砂質壤土、碎石土或腐植土（忌積水爛鱗莖）",
+        sunlight: "全日照至半日照（莖葉喜光，根部喜涼爽）",
+        watering: "土表微乾再澆透，約每 3–5 天一次，雨季務必維持排水順暢",
+        season: "每年 4 月 – 9 月（依海拔高低不同）",
+        spots: "新北野柳與麟山鼻、桃園白沙岬、花蓮太魯閣、合歡山",
+        tips: "白色喇叭形花瓣背面帶有紫紅色條紋，生命力極強，從東北角海崖到三千公尺高山都能見到它的身影。"
+      },
+      {
+        id: 16,
+        img: "images/16.jpg",
+        zh: "蝴蝶蘭",
+        en: "Moth Orchid",
+        sci: "Phalaenopsis spp.",
+        category: ["partial-shade", "native"],
+        badge: "蘭花王國代表",
+        temp: "18°C – 28°C",
+        soil: "水苔、樹皮、木炭或蛇木屑等透氣不積水植料",
+        sunlight: "散射明亮光（室內窗邊或 50%–70% 遮陰，忌烈日直射灼傷）",
+        watering: "待水苔微乾或盆器變輕後再澆透，約每 5–7 天一次，忌葉心積水",
+        season: "每年冬春季（約 1 月 – 5 月，經環控可週年開花）",
+        spots: "台南台灣蘭花生物科技園區、花蓮太魯閣原生地（台灣阿媽）",
+        tips: "台灣外銷全球的明星花卉，原生種「台灣阿媽（台灣蝴蝶蘭）」即產於恆春半島與台東蘭嶼等地。"
+      },
+      {
+        id: 17,
+        img: "images/17.jpg",
+        zh: "杜鵑花",
+        en: "Azalea",
+        sci: "Rhododendron spp.",
+        category: ["full-sun", "partial-shade"],
+        badge: "台北市花",
+        temp: "15°C – 25°C",
+        soil: "排水良好、富含有機質的酸性腐植土（pH 4.5–5.5）",
+        sunlight: "全日照至半日照（平地夏季略遮陰更佳）",
+        watering: "根系較淺，不耐過度乾旱亦忌長期積水，約每 2–3 天澆水一次",
+        season: "每年 3 月 – 5 月（平地平戶杜鵑與高山森氏、玉山杜鵑接力）",
+        spots: "台灣大學校園、台北大安森林公園、陽明山、合歡山",
+        tips: "台灣除了平地常見的平戶杜鵑外，合歡山等高海拔山區還有珍貴的原生高山杜鵑（如玉山杜鵑）。"
+      },
+      {
+        id: 18,
+        img: "images/18.jpg",
+        zh: "吉野櫻",
+        en: "Yoshino Cherry",
+        sci: "Prunus × yedoensis",
+        category: ["full-sun"],
+        badge: "粉白櫻花海",
+        temp: "12°C – 22°C",
+        soil: "肥沃深厚、排水良好之微酸性至中性砂質壤土",
+        sunlight: "全日照（需充足日照及良好通風）",
+        watering: "忌積水，生長期表土乾燥再澆透（約每週 1–2 次）",
+        season: "每年 3 月 – 4 月",
+        spots: "嘉義阿里山森林遊樂區、新北淡水無極天元宮、台北陽明山",
+        tips: "花朵初開時呈淡粉紅，盛開轉為粉白色且五瓣平展，需要較冷涼的冬季低溫才能整齊綻放。"
+      },
+      {
+        id: 19,
+        img: "images/19.jpg",
+        zh: "向日葵",
+        en: "Sunflower",
+        sci: "Helianthus annuus",
+        category: ["full-sun"],
+        badge: "陽光花海",
+        temp: "20°C – 30°C",
+        soil: "適應性強，以排水良好、肥沃之壤土或砂質壤土最佳",
+        sunlight: "全日照（每日需 6 小時以上直射光）",
+        watering: "生長快速需水量較多，約每 1–2 天澆水一次，花期避免缺水萎凋",
+        season: "台灣四季皆可播種，5 月 – 10 月最盛",
+        spots: "桃園觀音向陽農場、台中中社花市、花東縱谷花海",
+        tips: "未開花前的花苞與嫩葉會隨太陽轉向，開花後則固定朝向東方；除觀賞用亦有矮生盆栽品種。"
+      },
+      {
+        id: 20,
+        img: "images/20.jpg",
+        zh: "朱槿（扶桑花）",
+        en: "Hibiscus",
+        sci: "Hibiscus rosa-sinensis",
+        category: ["full-sun"],
+        badge: "四季常開",
+        temp: "20°C – 32°C",
+        soil: "富含有機質、排水良好之砂質壤土或培養土",
+        sunlight: "全日照（光照越充足開花越源源不絕）",
+        watering: "喜濕潤但忌積水，春夏季約每 1–2 天澆水一次，冬季可略減",
+        season: "台灣平地全年皆可開花（夏秋最盛）",
+        spots: "全台公園綠地、鄉間圍籬、庭園",
+        tips: "極具代表性的熱帶花木，花蕊柱長伸出花冠外十分醒目，修剪耐受度高，是台灣最親民的常綠花灌木之一。"
+      }
+    ];
+
+    const flowerGrid = document.getElementById("flowerGrid");
+    const searchInput = document.getElementById("searchInput");
+    const filterGroup = document.getElementById("filterGroup");
+    const resultCount = document.getElementById("resultCount");
+    const hiddenFileInput = document.getElementById("hiddenFileInput");
+
+    const modal = document.getElementById("flowerModal");
+    const modalClose = document.getElementById("modalClose");
+    const modalImg = document.getElementById("modalImg");
+    const modalZh = document.getElementById("modalZh");
+    const modalSub = document.getElementById("modalSub");
+    const modalGrid = document.getElementById("modalGrid");
+    const modalNotes = document.getElementById("modalNotes");
+
+    let currentFilter = "all";
+    let searchTerm = "";
+    let activeUploadId = null;
+
+    // 儲存使用者透過網頁載入的本地圖片 Blob URL
+    const customImageMap = {};
+
+    function getFilteredFlowers() {
+      return flowers.filter((f) => {
+        const matchFilter =
+          currentFilter === "all" || f.category.includes(currentFilter);
+
+        const q = searchTerm.trim().toLowerCase();
+        const matchSearch =
+          !q ||
+          f.zh.toLowerCase().includes(q) ||
+          f.en.toLowerCase().includes(q) ||
+          f.sci.toLowerCase().includes(q) ||
+          f.soil.toLowerCase().includes(q) ||
+          f.sunlight.toLowerCase().includes(q) ||
+          f.spots.toLowerCase().includes(q);
+
+        return matchFilter && matchSearch;
+      });
+    }
+
+    function renderCards() {
+      const list = getFilteredFlowers();
+      resultCount.textContent = `目前顯示 ${list.length} / ${flowers.length} 種花卉`;
+
+      if (list.length === 0) {
+        flowerGrid.innerHTML = `
+          <div class="empty-state">
+            <p style="font-size:1.1rem; margin-bottom:0.4rem;">找不到符合條件的花卉 🌿</p>
+            <p>請嘗試更換搜尋關鍵字或切換篩選分類。</p>
+          </div>
+        `;
+        return;
+      }
+
+      flowerGrid.innerHTML = list
+        .map((f) => {
+          const imgSrc = customImageMap[f.id] || f.img;
+          return `
+            <article class="card" data-id="${f.id}">
+              <div class="card-img-wrap">
+                <img src="${imgSrc}" alt="${f.zh} (${f.en})"
+                  onerror="this.style.display='none'; this.nextElementSibling.classList.add('visible');" />
+                <div class="img-fallback">
+                  <span style="font-size:1.8rem;">🌸</span>
+                  <strong>${f.zh}</strong>
+                  <span>請放入 <code>${f.img}</code></span>
+                </div>
+                <span class="card-tag">${f.badge}</span>
+                <button class="upload-photo-btn" type="button" onclick="triggerUpload(${f.id})">
+                  📷 更換照片
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="card-title-row">
+                  <div class="card-zh">${f.zh}</div>
+                  <div class="card-en">${f.en} <span class="card-sci">(${f.sci})</span></div>
+                </div>
+                <div class="specs-list">
+                  <div class="spec-item">
+                    <span class="spec-label">🌡️ 溫度</span>
+                    <span class="spec-value">${f.temp}</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">🪴 土壤</span>
+                    <span class="spec-value">${f.soil}</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">☀️ 日照</span>
+                    <span class="spec-value">${f.sunlight}</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">💧 澆水</span>
+                    <span class="spec-value">${f.watering}</span>
+                  </div>
+                </div>
+                <button class="detail-btn" type="button" onclick="openModal(${f.id})">
+                  查看花期與賞花情報 →
+                </button>
+              </div>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    window.triggerUpload = function (id) {
+      activeUploadId = id;
+      hiddenFileInput.value = "";
+      hiddenFileInput.click();
+    };
+
+    hiddenFileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file && activeUploadId !== null) {
+        const url = URL.createObjectURL(file);
+        customImageMap[activeUploadId] = url;
+        renderCards();
+      }
+    });
+
+    window.openModal = function (id) {
+      const f = flowers.find((item) => item.id === id);
+      if (!f) return;
+
+      modalImg.src = customImageMap[f.id] || f.img;
+      modalImg.alt = `${f.zh} (${f.en})`;
+      modalZh.textContent = f.zh;
+      modalSub.textContent = `${f.en} ｜ 學名：${f.sci}`;
+
+      modalGrid.innerHTML = `
+        <div class="modal-box">
+          <h4>🌡️ 適合生長溫度</h4>
+          <p>${f.temp}</p>
+        </div>
+        <div class="modal-box">
+          <h4>☀️ 日照需求</h4>
+          <p>${f.sunlight}</p>
+        </div>
+        <div class="modal-box">
+          <h4>🪴 適合土壤介質</h4>
+          <p>${f.soil}</p>
+        </div>
+        <div class="modal-box">
+          <h4>💧 澆水頻率</h4>
+          <p>${f.watering}</p>
+        </div>
+        <div class="modal-box">
+          <h4>🗓️ 台灣常見花期</h4>
+          <p>${f.season}</p>
+        </div>
+        <div class="modal-box">
+          <h4>📍 台灣推薦賞花地點</h4>
+          <p>${f.spots}</p>
+        </div>
+      `;
+
+      modalNotes.innerHTML = `<strong>🌿 栽培與花卉小知識：</strong>${f.tips}`;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    };
+
+    function closeModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      searchTerm = e.target.value;
+      renderCards();
+    });
+
+    filterGroup.addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter-btn");
+      if (!btn) return;
+      filterGroup.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderCards();
+    });
+
+    renderCards();
+  </script>
+</body>
+</html>
